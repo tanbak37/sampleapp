@@ -89,6 +89,10 @@ class User < ActiveRecord::Base
     Micropost.where("user_id = ?", id)
   end
   
+  def postinganorang
+    Micropost.where("target_id = ?", id)
+  end
+  
   # Returns a user's status feed.
   def feed
     following_ids = "SELECT followed_id FROM relationships

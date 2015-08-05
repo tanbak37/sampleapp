@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630095154) do
+ActiveRecord::Schema.define(version: 20150804132302) do
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "text"
+    t.integer  "User_id"
+    t.integer  "Room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "messages", ["Room_id"], name: "index_messages_on_Room_id"
+  add_index "messages", ["User_id"], name: "index_messages_on_User_id"
 
   create_table "microposts", force: :cascade do |t|
     t.text     "content"
@@ -19,8 +30,10 @@ ActiveRecord::Schema.define(version: 20150630095154) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "picture"
+    t.integer  "target_id"
   end
 
+  add_index "microposts", ["target_id"], name: "index_microposts_on_target_id"
   add_index "microposts", ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
   add_index "microposts", ["user_id"], name: "index_microposts_on_user_id"
 
@@ -34,6 +47,16 @@ ActiveRecord::Schema.define(version: 20150630095154) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id"
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id"
+
+  create_table "rooms", force: :cascade do |t|
+    t.integer  "User_id"
+    t.integer  "Message_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "rooms", ["Message_id"], name: "index_rooms_on_Message_id"
+  add_index "rooms", ["User_id"], name: "index_rooms_on_User_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
