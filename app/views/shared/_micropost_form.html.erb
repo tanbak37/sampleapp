@@ -1,7 +1,7 @@
 <%= form_for(@micropost, html: { multipart: true }) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
-    <%= f.text_area :content, placeholder: "Compose new micropost..." %>
+    <%= f.text_area :content, placeholder: "Apa yang ingin anda posting....." %>
   </div>
   <%= f.hidden_field :target_id, value: @user.id if current_user.id!=@user.id  %>
   <%= f.submit "Post", class: "btn btn-primary" %>
